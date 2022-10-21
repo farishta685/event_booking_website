@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Manage</title>
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <link rel="stylesheet" href="stylesheets/manage.css">
+        <script src="javascripts/index.js"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="javascripts/manage.js" defer></script>
+        <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" crossorigin="anonymous">  from prac8, for styling the tables -->
+    </head>
+    <body onload = header();footer()>
+        <header>
+        </header>
+
+        <div id="manage">
+        <div id="manage-nav">
+            <ul>
+            <li><button class="manage-button" onclick="vueinst.managing = 1;" v-on:click="see_managers()">Manage Admins</button></li>
+            <li><button class="manage-button" onclick="vueinst.managing = 2;" v-on:click="see_users()">Manage Users</button></li>
+            <li><button class="manage-button" onclick="vueinst.managing = 3;" v-on:click="see_events()">Manage Events</button></li>
+            </ul>
+        </div>
+
+        <div id="manage-div1" class="about-content" v-show="managing==1">
+            <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>Admin ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+                <tr v-for="(admin,index) in admins"><td>{{admin.userID}}</td>
+                <td>{{admin.username}}</td>
+                <td>{{admin.first_name}}</td>
+                <td>{{admin.last_name}}</td>
+                <td class="delete-button"><img src="Images/delete.png" alt="a trash bin with a blue gradient" title="Delete Admin" class="delete-image" v-on:click="delete_admin(index)"></td></tr>
+            </table>
+        </div>
+
+        <div id="manage-div2" class="about-content" v-show="managing==2">
+            <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Delete</th>
+                    <th>Promote</th>
+                    <th>Change Username</th>
+                    <th>Change Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user,index) in users"><td>{{user.userID}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td class="delete-button"><img src="Images/delete.png" alt="a trash bin with a blue gradient" title="Delete User" class="delete-image" v-on:click="delete_user(index)"></td>
+                <td class="delete-button"><img src="Images/leadership.png" alt="a person and a gear with a blue gradient" title="Promote User" class="delete-image" v-on:click="promote_admin(index)"></td>
+        <!--    <td class="change-username-button"><img src="Images/changeUsername.png" alt="silhouette of a person" title="Change Username" class="delete-image" v-on:click="adminWantChangeUsername(index)"></td>
+                <td class="change-password-button"><img src="Images/changePassword.png" alt="a lock" title="Change Password" class="delete-image" v-on:click="adminWantChangePassword(index)"></td></tr>
+        -->     <td class="delete-button"><img src="Images/changeUsername.png" alt="silhouette of a person" title="Change Username" class="delete-image" v-on:click="adminWantChangeUsername(index)"></td>
+                <td class="delete-button"><img src="Images/changePassword.png" alt="a lock" title="Change Password" class="delete-image" v-on:click="adminWantChangePassword(index)"></td></tr>
+            </tbody>
+            </table>
+
+        </div>
+
+        <div id = "adminChangeUserdetails" v-show = "wantChangeUserDetails">
+
+            <form> <!--Admin update username and password-->
+                <label for="Opswd"><b> Change Username </b></label>
+                <input type="text" placeholder="New username" id="Opswd" v-model = "newUsername">
+                <button id="change_username" class="dash-button" type="button" v-on:click="adminUpdateUsername()">Update</button>
+                <br>
+                <label for="Rpswd"><b> Change Password </b></label>
+                <input type="text" placeholder="New Password" id="Rpswd" v-model = "newPassword">
+                <button id="change_password" class="dash-button" type="button" v-on:click="adminUpdatePassword()">Update</button>
+
+            </form>
+            </div>
+
+        <div id="manage-div3" class="about-content" v-show="managing==3">
+            <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>Event ID</th>
+                    <th>Event Host ID</th>
+                    <th>Host First Name</th>
+                    <th>Host Last Name</th>
+                    <th>Event Name</th>
+                    <th>Event Description</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(event,index) in events"><td>{{event.eventID}}</td>
+                <td>{{event.hostID}}</td>
+                <td>{{event.first_name}}</td>
+                <td>{{event.last_name}}</td>
+                <td>{{event.eventName}}</td>
+                <td>{{event.eventDesc}}</td>
+                <td class="delete-button"><img src="Images/delete.png" alt="a trash bin with a blue gradient" title="Delete Event" class="delete-image" v-on:click="delete_event(index)"></td></tr>
+            </tbody>
+            </table>
+        </div>
+<!--    REPLACED BY ABOVE
+        <div id ="manage-div">
+            <p class = "about-content" v-if="managing == 1">{{managers.managersID}} {{managers.managersID}} {{managers.managers_first_name}} {{managers.managers_last_name}}</p>
+            <p class = "about-content" v-else-if="managing == 2">{{users.usersID}} {{user.usersID}} {{users.users_first_name}} {{users.users_last_name}}</p>
+            <p class = "about-content" v-else-if="managing == 3">{{events.eventsID}} {{events.events_name}} {{events.host}} {{events.description}}</p>
+        </div>
+-->
+        </div>
+
+        <footer>
+        </footer>
+    </body>
+</html>

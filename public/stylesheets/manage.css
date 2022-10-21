@@ -1,0 +1,110 @@
+/*Start management page style*/
+
+#manage {
+    margin: 1rem;
+    padding: 2rem 2rem;
+    text-align: center;
+} /* centers content */
+
+#manage div {
+    border-radius: 1em;
+    vertical-align: top;
+    display: inline-block;
+    border: 10px solid #DDEFEF;
+    max-height: 700px;
+    overflow-y: auto;
+} /*styles both middle divs*/
+
+#manage-nav {
+    padding: 0;
+    background-color: #F8E4F0;
+    vertical-align: top;
+    width: 10em;
+} /*styles the nav*/
+
+#manage-nav ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+} /*styles the inside of the nav */
+
+#manage-div1, #manage-div2, #manage-div3 {
+    padding: 1rem 1rem;
+    width: 70%;
+    background-color: white;
+} /* styles the div with the content */
+
+.manage-button {
+    width: 100%;
+    display: block;
+    background-color: #F8E4F0;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    border-radius: 1em;
+} /* styles the buttons in the nav */
+
+.active, .manage-button:hover {
+    background-color: #FDD5E0;
+} /* changes the button color on hover */
+
+.delete-button{
+    width: 30px; /* pixel values so the edit and delete buttons don't become really tiny when you shrink the page */
+    height: 30px;
+}
+
+.delete-image{
+    object-fit: cover;
+    max-width:100%;
+    max-height:100%;
+    display: inline-block;
+    padding-bottom: 1%;
+    cursor: pointer;
+}
+
+/* table, th, td {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #cbcbcb;
+    border: 1px solid #cbcbcb;
+    tr:nth-child(even) {background-color: #f2f2f2;}
+} */
+
+/* Table styling */
+.pure-table{
+    border-collapse:collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.pure-table td, .pure-table th{
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: .5em 1em
+}
+.pure-table thead{
+    background-color: #e0e0e0;
+    color:#000;
+    vertical-align: bottom
+}
+.pure-table td{
+    background-color: transparent
+}
+.pure-table-horizontal td, .pure-table-horizontal th{
+    border-width: 0 0 1px 0;
+    border-bottom: 1px solid #cbcbcb
+}
+.pure-table-horizontal tbody>tr:last-child>td{border-bottom-width:0}
+
+/*End manage style*/

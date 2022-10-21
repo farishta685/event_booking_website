@@ -1,0 +1,102 @@
+/* For styles that apply to all pages (mostly header and footer) */
+
+html{
+    width: 100%;
+} /*ensures the content fills the page */
+
+h3{
+    font-family: monaco, "Lucida Console", monospace;
+} /*This is the only different font we use, here to make it consistent*/
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+  /* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #F8E4F0;
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FDD5E0;
+}
+
+/*Start header styles*/
+    #header{
+        position: relative;
+        height:64px;
+        background-color: white;
+    }
+
+    #Quokka{
+        float: left;
+        width:3em;
+    } /* Quokka Picture */
+
+    #header-title{
+        color: inherit;
+        text-decoration: none;
+    } /*Makes the title a link without any link styling*/
+    #header h1{
+        float: left;
+    } /*"Friday Quokka"*/
+    .right{
+        text-align: right;
+        float: right;
+        margin: 0;
+    } /*Sends header buttons to the right and gives some padding*/
+
+    .header-button{
+        display: inline-block;
+        cursor: pointer;
+        padding: 20px;
+        padding-top: 35px;
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 64px;
+        border: none;
+        outline: none;
+        background-color: inherit;
+        max-height:64px;
+        vertical-align: top;
+    } /*styles header buttons*/
+
+    .header-button:hover{
+        color: #C4E4E3;
+    }
+/*End header styles*/
+
+/*Start footer style*/
+    #copyright,.footer-button{
+        float: left;
+        padding: 20px;
+        margin: 0;
+        height: 64px;
+        border: none;
+        outline: none;
+        background-color: inherit;
+        max-height:64px;
+        vertical-align: top;
+        text-decoration: none;
+    } /* styles the footer buttons */
+
+    .footer-button{
+        cursor: pointer;
+    } /* changes the cursor when the mouse hovers over the footer buttons */
+    .footer-button:hover{
+        color: #C4E4E3;
+    } /* Changes the color of the footer buttons when the mouse hovers over them */
+
+    #footline{
+        border: 3px dotted #DDEFEF;
+    } /* Styles hr in footer */
+
+/*End footer style*/

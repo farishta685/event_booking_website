@@ -1,0 +1,10 @@
+        <div id="header">
+            <!-- Quokka image and Logo -->
+            <a href="/"><img id="Quokka" src="Images/Quokka.png" alt="Quokka in a party hat"></a>
+            <h1><a href="/" id="header-title">Friday Quokka</a></h1>
+            <p class ="right">
+            <button onclick="location.href='NewEvent.html';" class = "header-button"> CREATE NEW EVENT </button>
+            <button onclick="location.href='Dashboard.html';" class = "header-button"> ME </button>
+            <button type = "button" class = "header-button" onclick = "logout()"> LOG OUT </button>
+            </p>
+        </div>

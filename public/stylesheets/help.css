@@ -1,0 +1,41 @@
+/*Start help style*/
+#help{
+    min-height: 100vh;
+    margin: 0;
+    background-color: #DDEFEF;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-help{
+    background-color: white;
+    text-align: center;
+    width: 40em;
+    margin: auto;
+}
+
+.help-faqlink{
+    background-color: #F8E4F0;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+.active, .help-faqlink:hover {
+    background-color: #FDD5E0;
+}
+
+.help-content {
+    padding: 0 18px;
+    background-color: white;
+    overflow: hidden;
+}
+.help-content img{
+    max-width:100%;
+    max-height:100%;
+    object-fit: contain;
+}
+/*End help style*/

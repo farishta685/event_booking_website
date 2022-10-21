@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+        <meta http-equiv='x-ua-compatible' content='ie=edge'>
+        <title>Friday Quokka</title>
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="stylesheet" href="stylesheets/NewEvent.css">
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="javascripts/newEvent.js" defer></script>
+        <script src="javascripts/index.js"></script>
+        <script src='https://unpkg.com/vue/dist/vue.js'></script>
+        <script src='https://unpkg.com/v-calendar'></script>
+    </head>
+    <body onload=header();footer()>
+        <header>
+        </header>
+        <div id="main_NE">
+            <div id="timeline">
+                <div v-bind:style="{ width: width + '%' }">{{Math.round(width)}}%</div>
+            </div>
+            <div class="event-details">
+
+
+                <div id="info" v-show="info" class="inputDiv">
+                    <h3>Create New Event</h3>
+                    <p> Tell us more about your new event </p>
+                    <select style="width:60%; height:7%; border-radius:10em;" v-model="eventType">
+                        <option selected disabled> what type of an event is this?</option>
+                        <option value="Casual"> Casual get together </option>
+                        <option value="Formal">Formal meeting </option>
+                    </select>
+                    <p class="inputError" v-if="typeError">Please select an option</p>
+                    <br>
+                    <input type="text" id="event-name" name="event-name" maxlength="255" placeholder="What would you like to call this event?" v-model="eventName">
+                    <p class="inputError" v-if="nameError">Please name your event</p>
+                    <input type="text" name="search-address" id="event-location" maxlength="255" placeholder="Where is this event being held?" v-model="eventLocation">
+                    <p class="inputError" v-if="locationError">Please give your event a location</p>
+                    <textarea id="event-description" name="event-description" maxlength="255" placeholder="Add a description: " v-model="eventDesc"></textarea>
+                    <p class="inputError" v-if="descError">Please give your event a description</p>
+                    <button class="next" v-on:click="hide('invite')"> Next </button>
+                </div>
+
+
+                <div id="invite" v-show="invite" class="inputDiv">
+                    <h3>Create Guest List</h3>
+                    <div id="invite-wrapper">
+                    <p>Who would you like to invite to this event? </p>
+                    <input type="text" name="search-people" placeholder="Search for a user..." v-on:mousedown="dropdown = true" v-on:blur="dropdown = false" v-model="searchUsers" v-on:input="search_users()">
+                    <div id="searchDropdown" v-if="dropdown">
+                        <p v-for="(user,index) in filteredUsers" v-on:mousedown="addGuest(index)">{{user.username}} ({{user.first_name}} {{user.last_name}})</p>
+                    </div>
+                    </div>
+                    <div id="guestlist">
+                        <table class="guesttable">
+                            <thead>
+                                <tr>
+                                <th colspan="2"> Guests </th>
+                                </tr>
+                            </thead>
+                            <tr v-for="(guest,index) in guestList">
+                                <td>{{guest.username}} ({{guest.first_name}} {{guest.last_name}})</td>
+                                <td><img src="Images/delete.png" alt="a trash bin with a blue gradient" title="Remove Guest" class="remove-guest" v-on:click="remove_guest(index)"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p v-if="guestError">Please invite some friends!</p>
+                    <button class="back" v-on:click="hide('info'); go_back()"> Back </button>
+                    <button class="next" v-on:click="hide('time')"> Next </button>
+                </div>
+
+                <div id="time" v-show="time" class="inputDiv">
+                    <h3>Pick the Times for Consideration</h3>
+                    <p> Please pick three potential times for your guests to vote on</p>
+                    <br>
+                    <br>
+                    <h3>Time 1</h3>
+                        <template>
+                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" @submit.prevent>
+                              <div class="mb-4">
+                                <v-date-picker
+                                  mode="dateTime"
+                                  v-model="range1"
+                                  is-range
+                                  is-24hr
+                                />
+                                  <template v-slot="{ inputValue, inputEvents, isDragging }">
+                                    <div class="flex flex-col sm:flex-row justify-start items-center">
+                                      <div class="relative flex-grow">
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.start"
+                                          v-on="inputEvents.start"
+                                        />
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.end"
+                                          v-on="inputEvents.end"
+                                        />
+                                      </div>
+                                    </div>
+                                  </template>
+                                </v-date-picker>
+                              </div>
+                            </form>
+                          </template>
+                          <br>
+                    <br>
+                    <h3>Time 2</h3>
+                        <template>
+                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" @submit.prevent>
+                              <div class="mb-4">
+                                <v-date-picker
+                                  v-model="range2"
+                                  mode="dateTime"
+                                  :masks="masks"
+                                  is-range
+                                />
+                                  <template v-slot="{ inputValue, inputEvents, isDragging }">
+                                    <div class="flex flex-col sm:flex-row justify-start items-center">
+                                      <div class="relative flex-grow">
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.start"
+                                          v-on="inputEvents.start"
+                                        />
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.end"
+                                          v-on="inputEvents.end"
+                                        />
+                                      </div>
+                                    </div>
+                                  </template>
+                                </v-date-picker>
+                              </div>
+                            </form>
+                          </template>
+                          <br>
+                    <br>
+                    <h3>Time 3</h3>
+                        <template>
+                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" @submit.prevent>
+                              <div class="mb-4">
+                                <v-date-picker
+                                  v-model="range3"
+                                  mode="dateTime"
+                                  :masks="masks"
+                                  is-range
+                                />
+                                  <template v-slot="{ inputValue, inputEvents, isDragging }">
+                                    <div class="flex flex-col sm:flex-row justify-start items-center">
+                                      <div class="relative flex-grow">
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.start"
+                                          v-on="inputEvents.start"
+                                        />
+                                        <input
+                                          class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
+                                          :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                                          :value="inputValue.end"
+                                          v-on="inputEvents.end"
+                                        />
+                                      </div>
+                                    </div>
+                                  </template>
+                                </v-date-picker>
+                              </div>
+                            </form>
+                          </template>
+
+
+
+
+                    <button class="back" v-on:click="hide('invite'); go_back()"> Back </button>
+                    <button class="next" v-on:click="hide('confirm')"> Next </button>
+                </div>
+
+                <div id="confirm" v-if="confirm" class="inputDiv">
+                    <h3>Event Confirmation</h3>
+                    <div id="infoConfirm-wrapper">
+                    <div id="infoConfirm">
+                        <p class="text-wrap"><b>Event Name:</b> {{eventName}}</p>
+                        <p class="text-wrap"><b>Event Type:</b> {{eventType}}</p>
+                        <p class="text-wrap"><b>Event Location:</b> {{eventLocation}}</p>
+                        <pre class="text-wrap"><b>Event Description:</b> {{eventDesc}}</pre>
+                    </div>
+                    </div>
+                    <div id="guestConfirm">
+                        <table class="guesttable">
+                            <thead>
+                                <tr>
+                                <th colspan="1"> Guests </th>
+                                </tr>
+                            </thead>
+                            <tr v-for="(guest,index) in guestList">
+                                <td>{{guest.username}} ({{guest.first_name}} {{guest.last_name}})</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button class="back" v-on:click="hide('time'); go_back()"> Back </button>
+                    <button id="confirm-event" v-on:click="createEvent()"> confirm </button>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+        </footer>
+    </body>
+</html>

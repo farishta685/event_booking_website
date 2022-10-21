@@ -1,0 +1,99 @@
+/*Start Login style*/
+
+/*Main contains the register and login*/
+
+/*All divs put into here*/
+#whole{
+    display: block;
+    padding-top: 1em;
+    text-align: center;
+    margin-left: 0;
+    width: 100%;
+}
+
+#welcome,#main,#catchphrase{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#main{
+    width: 30em;
+}
+
+.pinkBlocks {
+    color: black;
+    background-color: #F8E4F0; /*pink*/
+    text-align: center;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+    width: 15em;
+    border-radius: 1em;
+    margin-right: 3em;
+    margin-left: 3em;
+}
+
+.borderGreen {
+    border-style: solid;
+    border-color: #CEEBEF;
+    border-radius: 1em;
+    border-width: 1em;
+}
+
+.buttonPink {
+
+    background-color: #F8E4F0; /*pink*/
+    border-color: #FDD5E0;
+    padding: 0.75em 0.75em;
+    text-align: center;
+    cursor: pointer; /*Hover over to get hand icon*/
+    border-radius: 0.75em;
+}
+
+.buttonGreen {
+
+    background-color: #DDEFEF; /*green*/
+    border: none;
+    padding: 1em 1em;
+    text-align: center;
+    cursor: pointer; /*Hover over to get hand icon*/
+    border-radius: 0.5em;
+    width: 9.3em;
+}
+
+.socialLogin{
+    margin-bottom: 2em;
+}
+
+/*Button size 1*/
+
+.buttonSize1 {
+    font-size: 1.25em;
+}
+
+/*Button size 2*/
+
+.buttonSize2 {
+    font-size: 1.5em;
+}
+
+/*Quokka pictures to be consistent*/
+.quokkaPictures {
+    resize: both;
+    width: 100%;
+    max-width: 40vw;
+    height: auto;
+    max-height: 45vh;
+    float: right;
+}
+
+/*Centre GoogleDiv*/
+.GoogleDiv{
+    width: 100%;
+}
+
+.GoogleDiv > div {
+    margin: 0 auto;
+}
+/*End Login style*/

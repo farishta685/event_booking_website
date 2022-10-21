@@ -1,0 +1,169 @@
+<!--Login and Register page-->
+
+<!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="google-signin-client_id" content="477900528659-0il1ijc8cop1muka5pueojbc7u3uej2p.apps.googleusercontent.com">
+        <meta name = "google-signin-plugin_name" content = "APP">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+        <title>Login or Register</title>
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <link rel="stylesheet" href="stylesheets/login.css">
+        <script src="javascripts/login.js" defer></script>
+        <script src="javascripts/index.js"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+
+    </head>
+
+        <body onload = header();footer()>
+
+            <header>
+
+            </header>
+
+            <div id = "whole">
+            <!--Catchphrase to the left of screen-->
+                <div id = "catchphrase" class = "pinkBlocks">
+
+                    <h2>Event planning</h2>
+                    <h2>like a QUOKKA!</h2>
+
+                    <img src="Images/QuokkaLoginRegister.png" alt="Picture of cute quokka" class = "quokkaPictures">
+
+                </div>
+
+
+
+                <div id = "main">
+
+                    <div id = "loginRegisterButtons" class = "centreButtons">
+
+                        <!--Login and Register buttons-->
+                        <!--The default button activated will be the login one-->
+                        <button type = "button" v-on:click = "showLoginHideRegister()" class = "buttonGreen buttonSize2">Login</button>
+                        <button type = "button" v-on:click = "showRegisterHideLogin()" class = "buttonGreen buttonSize2">Register</button>
+                    </div>
+
+                        <!--The default Login div-->
+                    <div id = "login" class = "centre mainBlock borderGreen" v-show = "loginShow">
+
+                        <h1>Login</h1>
+
+                        <p id = "postLoginMessage">{{loginMessage}}</p>
+
+                        <form>
+                            <!--Input e-mail-->
+                            <label for = "e-mail">E-mail:</label><br>
+                            <input type = "text" id = "e-mail" v-model = "loginEmail"><br>
+
+                            <br>
+
+                            <!--Input password-->
+                            <label for = "password">Password:</label><br>
+                            <!--type="password" hides the password - may want an option to show password with Javascript-->
+                            <input type = "password" id = "password" v-model = "loginPassword"><br>
+
+                            <br>
+
+                            <!--Login button-->
+                            <button type = "button" class = "buttonPink buttonSize1" v-on:click = "checkUser()">Sign in</button>
+                            <!--<input type = "submit" value = "Sign in" class = "buttonPink buttonSize1" v-on:click = "checkEmail()">-->
+
+                        </form>
+
+                        <h4>Login via:</h4>
+                        <div class="g-signin2 GoogleDiv" data-onsuccess="onSignIn"></div>
+                        <!--<button type = "button" class="socialLogin">Google</button>-->
+                        <!--<button type = "button" class="socialLogin">Facebook</button>-->
+
+                    </div>
+
+                <!--The Register div-->
+                <div id = "register" class = "centre mainBlock borderGreen" v-show = "registerShow">
+
+                    <h1>Register</h1>
+
+                    <p id = "postRegisterMessage">{{registerMessage}}</p>
+
+                    <form>
+
+                        <!--Input first name-->
+                        <label for = "firstName">First name:</label><br>
+                        <input type = "text" id = "firstName" v-model = "registerFirstName"><br>
+
+                        <br>
+
+                        <!--Input last name-->
+                        <label for = "lastName">Last name:</label><br>
+                        <input type = "text" id = "lastName" v-model = "registerLastName"><br>
+
+                        <br>
+
+                        <!--Input e-mail-->
+                        <label for = "RegisterE-mail">E-mail:</label><br>
+                        <input type = "text" id = "RegisterE-mail" v-model = "registerEmail"><br>
+
+                        <br>
+
+                        <!--Confirm e-mail-->
+                        <label for = "confirmE-mail">Confirm e-mail:</label><br>
+                        <input type = "text" id = "confirmE-mail" v-model = "registerConfirmEmail"><br>
+
+                        <br>
+
+                        <!--Input password-->
+                        <label for = "RegisterPassword">Password:</label><br>
+                        <!--type="password" hides the password - may want an option to show password with Javascript-->
+                        <input type = "password" id = "RegisterPassword" v-model = "registerPassword"><br>
+
+                        <br>
+
+                        <!--Confirm password-->
+                        <label for = "ConfirmPassword">Confirm password:</label><br>
+                        <!--type="password" hides the password - may want an option to show password with Javascript-->
+                        <input type = "password" id = "ConfirmPassword" v-model = "registerConfirmPassword"><br>
+
+                        <br>
+
+                        <!--Input user name-->
+                        <label for = "username">Username:</label><br>
+                        <input type = "text" id = "username" v-model = "registerUsername"><br>
+
+                        <br>
+
+                        <!--Register button-->
+                        <button type = "button" class = "buttonPink buttonSize1" v-on:click = "checkForBlanks()">Register</button>
+                        <!--<input type = "submit" value = "Register" class = "buttonPink buttonSize1">-->
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!--Welcome section with picture of quokka family-->
+                <div id = "welcome" class = "pinkBlocks">
+
+                    <h2>Welcome to</h2>
+                    <h2>the family!</h2>
+
+                    <img src="Images/Family.png" alt="Picture of two quokkas" class = "quokkaPictures">
+
+                </div>
+
+            </div>
+
+            <footer>
+
+            </footer>
+
+
+        </body>
+
+    </html>

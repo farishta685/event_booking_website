@@ -1,0 +1,157 @@
+ <!DOCTYPE html>
+    <html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <!-- <link rel="stylesheet" href="/stylesheet.css">
+        <script type="text/javascript" src="javascript.js"> </script> -->
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <link rel="stylesheet" href="stylesheets/dashboard.css">
+        <script src="javascripts/index.js"> </script>
+        <!-- <script src="javascripts/manage.js"> </script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="javascripts/dashboard.js" defer></script>
+
+    </head>
+
+    <body onload = header();footer() id="about">
+    <header>        </header>
+    <div id="dash">
+
+        <h1>Welcome Back!</h1>
+
+        <div id="TTN-container">
+            <div id="pending">
+                <h3> Pending Events </h3>
+                <ul id="pending-events">
+                    <li v-for="(event,index) in pending_events" v-on:click="load_eventpage(index,0)">{{event.eventName}} {{event.eventStartTime}}</li>
+                </ul>
+                <h3> Confirmed Events</h3>
+                <ul id ="confirmed-events">
+                    <li v-for="(event,index) in confirmed_events" v-on:click="load_eventpage(index,8)">{{event.eventName}}</li>
+                </ul>
+            </div>
+
+            <div id="this_week">
+                    <h3> THIS WEEK </h3>
+                    <div class="events">
+                        <table id="calendar">
+                            <thead>
+                            <tr>
+                                <th>Sunday <br> {{sun_date}}</th>
+                              <th>Monday <br> {{mon_date}}</th>
+                              <th>Tuesday <br> {{tue_date}}</th>
+                              <th>Wednesday <br> {{wed_date}}</th>
+                              <th>Thursday <br> {{thu_date}}</th>
+                              <th>Friday <br> {{fri_date}}</th>
+                              <th>Saturday <br> {{sat_date}}</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in sunday" v-on:click="load_eventpage(index,7)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in monday" v-on:click="load_eventpage(index,1)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in tuesday" v-on:click="load_eventpage(index,2)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in wednesday" v-on:click="load_eventpage(index,3)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in thursday" v-on:click="load_eventpage(index,4)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in friday" v-on:click="load_eventpage(index,5)">{{event.eventName}}</li>
+                                </ul></td>
+                                <td><ul class="tablecolumn">
+                                    <li v-for="(event,index) in saturday" v-on:click="load_eventpage(index,6)">{{event.eventName}}</li>
+                                </ul></td>
+                            </tr>
+                          </table>
+                    </div>
+            </div>
+
+        <hr>
+
+
+        <div id="dash-nav">
+            <button class="dash-button" onclick="vueinst.show_inbox = 1;"> Inbox </button>
+            <button class="dash-button" onclick="vueinst.show_inbox = 3;"> Settings </button>
+            <input type=button class="dash-button" v-on:click="check_if_admin()" value='Surprise!'>
+        </div>
+
+        <div id="inbox" v-if="show_inbox == 1">
+            <h4> INBOX </h4>
+            <table id="inbox-table">
+                <thead>
+                <tr>
+                  <th>Notification Title</th>
+                  <th>Notification Content</th>
+                </tr>
+                </thead>
+                <tr v-for="notes in Notifications.slice().reverse()">
+                    <td>{{notes.notifTitle}}</td>
+                    <td v-html="notes.notifContent"></td>
+                </tr>
+              </table>
+              <p v-if="noNotes">No notifications yet!</p>
+        </div>
+
+        <div id="settings" v-else-if="show_inbox == 3">
+            <h4> SETTINGS </h4>
+            <form>
+                <input type="checkbox" id="notif-invite" value="notif-invite" v-model="prefInvite">
+                <label for="notif-invite"> Email me when I am invited to an event </label><br>
+                <input type="checkbox" id="notif-cancel" value="notif-cancel" v-model="prefDelete">
+                <label for="notif-cancel"> Email me when an event I am invited to is cancelled </label><br>
+                <input type="checkbox" id="notif-respond" value="notif-respond" v-model="prefRespond">
+                <label for="notif-respond"> Email me when someone responds to an event I am invited to </label><br>
+                <input type="checkbox" id="notif-confirm" value="notif-confirm" v-model="prefConfirm">
+                <label for="notif-confirm"> Email me when an event I am invited to is confirmed </label><br>
+                <br>
+                <button id="change_notifs" class="dash-button" type="button" v-on:click="update_notifications()">Update</button>
+            </form>
+            <hr>
+            <form>
+                <label for="email"><b> Change Email </b></label> <br>
+                <input type="text" placeholder="Enter New Email" id="email" v-model="Email"><br>
+                <br>
+                <button id="change_email" class="dash-button" type="button" v-on:click="update_email()">Update</button>
+            </form>
+            <hr>
+            <form> <!--Update password-->
+                <label for="Opswd"><b> Change Password </b></label> <br>
+                <input type="text" placeholder="Old Password" id="Opswd" v-model = "oldPassword"> <br>
+                <!--<label for="Npswd"><b> Change Password </b></label>-->
+                <input type="text" placeholder="New Password" id="Npswd" v-model = "newPassword"> <br>
+                <!--<label for="Rpswd"><b> Change Password </b></label>-->
+                <input type="text" placeholder="Confirm New Password" id="Rpswd" v-model = "confirmNewPassword"> <br>
+                <br>
+                <button id="change_pwd" class="dash-button" type="button" v-on:click="getHashedPassword()">Update</button>
+            </form>
+            <hr>
+            <form> <!--Update username-->
+                <label for="Nuser"><b> Change Username </b></label> <br>
+                <input type="text" placeholder="New username" id="Nuser" v-model = "newUsername"> <br>
+                <!--<input type="text" placeholder="Password" id="Npswd" v-model = "passwordToUpdateUsername"> <br>-->
+                <br>
+                <button id="change_username" class="dash-button" type="button" v-on:click="checkUsernameInDatabase()">Update</button>
+            </form>
+        </div>
+
+        <div v-else-if="show_inbox == 4">
+            <h4> SURPRISE! </h4>
+            <div> <img src="Images/QuokkaFamily.png" alt="a pair of quokkas" title="Aren't they so cute!"> </div>
+        </div>
+
+    </div>
+    </div>
+
+    <footer>        </footer>
+    </body>
+
+  </html>

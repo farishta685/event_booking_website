@@ -1,0 +1,268 @@
+/*Start Event Page Style*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+  /* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #F8E4F0;
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FDD5E0;
+}
+
+#event{
+    margin: 0;
+}
+
+#whole-event{
+    width: 75%;
+    position: relative;
+    margin: auto;
+    font-size:0px;
+}
+
+#event-image{
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    width: 100%;
+    height: 200px;
+    vertical-align: top;
+    border: 10px solid #DDEFEF;
+} /*Aligns the event image div*/
+
+#actual-event-image{
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+} /*styles the event image itself*/
+
+#event-wrapper,#pollandguest-wrapper{
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 60%;
+    height: 55vh;
+    font-size: x-large;
+}
+
+#pollandguest-wrapper{
+    width: 40%;
+}
+
+#whole-event h3{
+    text-align: center;
+    margin: 0;
+    margin-top: 1%;
+}
+
+#event-information,#poll, #guests, #time{
+    box-sizing: border-box;
+    border: 10px solid #DDEFEF;
+    border-radius: 1em;
+    width: 100%;
+    height:70%;
+    overflow-y: auto;
+}
+
+#guests{
+    height: 30%;
+}
+
+#time{
+    text-align: center;
+    height: 30%;
+}
+
+#event-information{
+    height:100%;
+}
+
+#event-information pre{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+}
+
+#edit-button{
+    width: 30px; /* pixel values so the edit and delete buttons don't become really tiny when you shrink the page */
+    height: 30px;
+    float: right;
+}
+
+.edit-image{
+    object-fit: cover;
+    max-width:100%;
+    max-height:100%;
+    display: inline-block;
+    padding-bottom: 1%;
+    cursor: pointer;
+}
+
+.poll-time, .guest-name{
+    margin-top: 0;
+    margin-bottom: 2.5%;
+    margin-left: 10%;
+    float: left;
+    text-align: left;
+}
+
+.poll-votes, .guest-status{
+    margin-top: 0;
+    margin-bottom: 2.5%;
+    margin-right: 10%;
+    float: right;
+    text-align: right;
+}
+
+.poll-votes{
+    margin-right: 5%;
+}
+
+#poll{
+    text-align: center;
+}
+
+#poll button{
+    border-radius: 10em;
+    background-color: #F8E4F0;
+    border-color: #FDD5E0;
+    width: 50%;
+    height: 20%;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+#poll .vote-button{
+    width: 20%;
+    float: right;
+    height: 15%;
+    font-size: medium;
+    margin-right: 3%;
+}
+
+#event-information button{
+    border-radius: 10em;
+    box-sizing: border-box;
+    background-color: #F8E4F0;
+    border-color: #FDD5E0;
+    width: 49.4%;
+    height: 10%;
+    display: inline-block;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.addToCalendar{
+    text-align: center;
+}
+
+.tablecolumn {
+    display: inline-table;
+    list-style-type: none;
+}
+
+/* Popup box BEGIN HEAVILY REFERENCED FROM https://html-online.com/articles/simple-popup-box/*/
+.popup-wrapper{
+    background:rgba(0,0,0,.4);
+    height:100%;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index:10000;
+}
+.popup-wrapper .popup-span{
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+.popup-content {
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 10px;
+    border: 10px solid #DDEFEF;
+    text-align: center;
+}
+.popup-content button {
+    border-radius: 10em;
+    background-color: #F8E4F0;
+    border-color: #FDD5E0;
+    width: 50%;
+    height: 20%;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.popup-content .calendarButton{
+    width: 49%;
+
+}
+
+.popup-content .finalise {
+    width: 100%;
+    font-size: medium;
+    cursor: pointer;
+}
+/* Popup box END */
+
+/* The table inside the popup START */
+
+#poll-expand,#poll-expand th,#poll-expand td {
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 5%;
+    padding: 15px;
+}
+
+#poll-expand{
+    width: 100%;
+} /* whole table */
+
+#poll-expand td{
+    background-color: #DDEFEF;
+}
+#poll-expand th{
+    background-color: #F8E4F0;
+
+}
+
+.guest-input{
+    border-radius: 8em;
+    text-align: center;
+    height: 40px;
+    width: 60% ;
+    margin: 20px;
+    margin-bottom: 0;
+}
+
+/* The table inside the popup END */
+
+/*End Event Page Style*/

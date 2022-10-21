@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Friday Quokka</title>
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <link rel="stylesheet" href="stylesheets/event.css">
+        <script src="javascripts/index.js"> </script>
+        <script src="https://kit.fontawesome.com/059fc2a176.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="javascripts/eventPage.js" defer></script>
+    </head>
+    <body onload = header();footer() id="event">
+        <script defer> //everything here is google stuff, don't blame us if it doesn't pass validation
+            /* exported gapiLoaded */
+            /* exported gisLoaded */
+            /* exported handleAuthClick */
+            /* exported handleSignoutClick */
+
+            // TODO(developer): Set to client ID and API key from the Developer Console
+            const CLIENT_ID = '477900528659-vpevuq69ust9b282too4hn6r73dqupcd.apps.googleusercontent.com';
+            const API_KEY = 'AIzaSyCMyf3ctE2c3NcxJwxBGg8EYL8B4AvFyho';
+
+            // Discovery doc URL for APIs used by the quickstart
+            const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+
+            // Authorization scopes required by the API; multiple scopes can be
+            // included, separated by spaces.
+            const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar';
+
+            let tokenClient;
+            let gapiInited = false;
+            let gisInited = false;
+
+            /**
+             * Callback after api.js is loaded.
+             */
+            function gapiLoaded() {
+              gapi.load('client', intializeGapiClient);
+            }
+
+            /**
+             * Callback after the API client is loaded. Loads the
+             * discovery doc to initialize the API.
+             */
+            async function intializeGapiClient() {
+              await gapi.client.init({
+                apiKey: API_KEY,
+                discoveryDocs: [DISCOVERY_DOC],
+              });
+              gapiInited = true;
+            }
+
+            /**
+             * Callback after Google Identity Services are loaded.
+             */
+            function gisLoaded() {
+              tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: '', // defined later
+              });
+              gisInited = true;
+            }
+
+            /**
+             *  Sign in the user upon button click.
+             */
+             function handleAuthClick(button) {
+              tokenClient.callback = async (resp) => {
+                if (resp.error !== undefined) {
+                  throw (resp);
+                }
+                if (button === 1){
+                    await vueinst.addToCalendar();
+                    alert("Event has been successfully added to your Google calendar!")
+                }
+                else if (button === 2){
+                    console.log("button is 2");
+                    // check on calendar if free or busy
+                    vueinst.check_availibility();
+                }
+              };
+
+              if (gapi.client.getToken() === null) {
+                // Prompt the user to select a Google Account and ask for consent to share their data
+                // when establishing a new session.
+                tokenClient.requestAccessToken({prompt: 'consent'});
+              } else {
+                // Skip display of account chooser and consent dialog for an existing session.
+                tokenClient.requestAccessToken({prompt: ''});
+              }
+            }
+
+            function check_availibility(startTime, endTime){            // Check if we a busy and have an event on our calendar for the same time.
+            calendar.freebusy.query(
+            {
+                resource: {
+                timeMin: startTime,
+                //'2022-06-20T09:00:00-07:00',
+                timeMax: endTime,
+                //'2022-06-20T09:00:00-09:00',
+                timeZone: 'Australia/Adelaide',
+                items: [{ id: 'primary' }],
+                },
+            },
+            (err, res) => {
+                // Check for errors in our query and log them if they exist.
+                if (err){
+                    return console.error('Free Busy Query Error: ', err);
+                }
+                // Create an array of all events on our calendar during that time.
+                const event_list = res.data.calendars.primary.busy
+
+                // Check if event array is empty which means we are not busy
+                if (event_list.length === 0){
+                    // If we are not busy create a new calendar event call function addToCalendar with parameter 1
+                      return false;
+                    }
+                else if (event_list.length >0){
+                    return true;
+                    console.log("Sorry I am busy doing super important stuff at this time!")
+                        }
+                    }
+                    );
+                }
+
+
+          </script>
+          <script defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+          <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+        <header>
+
+        </header>
+
+
+
+        <main id="event-page">
+            <div id="whole-event">
+                <div id="event-image">
+                    <img src="Images/Event_Quokka.jpeg" alt="A Quokka standing on the coast" id="actual-event-image">
+                </div>
+                <div id="event-wrapper">
+                    <div id="event-information">
+                        <h3>{{title}}</h3>
+                        <div id="edit-button" v-if="hostAccess">
+                            <img src="Images/delete.png" alt="a trash bin with a blue gradient" title="Delete Event" class="edit-image" v-on:click="delete_event()">
+                        </div>
+                        <p><b>Host</b>: {{host}}</p>
+                        <p><b>Status</b>: {{status}}</p>
+                        <p><b>Location</b>: {{location}}</p>
+                        <p><b>Type</b>: {{type}}</p>
+                        <pre><b>Description</b>: {{description}}</pre> <!--pre tag so that user formatting can be maintained from creation-->
+                        <button v-on:click="respondToInvite(1);" v-if="responseButtons">Accept Invite</button>
+                        <button v-on:click="respondToInvite(2);" v-if="responseButtons">Reject Invite</button>
+                        <div class="addToCalendar">
+                        <button v-if="finalised" onclick="handleAuthClick(1)">Add event to Google Calendar</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="pollandguest-wrapper">
+                    <div id="poll" v-if="!finalised">
+                        <h3>Event Time Poll</h3>
+                        <p class="poll-time">{{pollStartTime1}} - {{pollEndTime1}}</p> <br v-if="hostAccess"> <button class="vote-button" v-if="!voted1" v-on:click="vote('voted1')">Vote</button> <button class="vote-button" v-if="voted1" v-on:click="unvote('voted1')">Undo Vote</button> <p class="poll-votes">{{pollvotes1}} Votes</p>
+                        <br>
+                        <p class="poll-time">{{pollStartTime2}} - {{pollEndTime2}}</p> <br v-if="hostAccess"> <button class="vote-button" v-if="!voted2" v-on:click="vote('voted2')">Vote</button> <button class="vote-button" v-if="voted2" v-on:click="unvote('voted2')">Undo Vote</button> <p class="poll-votes">{{pollvotes2}} Votes</p>
+                        <br>
+                        <p class="poll-time">{{pollStartTime3}} - {{pollEndTime3}}</p> <br v-if="hostAccess"> <button class="vote-button" v-if="!voted3" v-on:click="vote('voted3')">Vote</button> <button class="vote-button" v-if="voted3" v-on:click="unvote('voted3')">Undo Vote</button> <p class="poll-votes">{{pollvotes3}} Votes</p>
+                        <br>
+                        <button v-on:click="popup = !popup;">Expand</button>
+                    </div>
+                    <div id="time" v-if="finalised">
+                        <h3>Final Time</h3>
+                        <p>{{finalstartTime}} - {{finalendTime}}</p>
+                    </div>
+
+                    <div id="guests" v-bind:style="[ finalised ? finalStyle : null ]">
+                        <h3>Guests</h3>
+                        <div id="guest-wrapper" v-for="guest in guestlist">
+                        <p class="guest-name">{{guest.invitees_username}} ({{guest.invitees_first_name}} {{guest.invitees_last_name}})</p> <p class="guest-status">{{guest.invitees_status}}</p>
+                        <br>
+                        <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Popup box BEGIN HEAVILY REFERENCED FROM https://html-online.com/articles/simple-popup-box/-->
+            <div class="popup-wrapper" v-if="popup">
+                <span class="popup-span"></span>
+                <div class="popup-content">
+                    <table id="poll-expand">
+                        <thead>
+                        <tr>
+                          <th>{{pollStartTime1}} - {{pollEndTime1}} <span v-if="hostAccess"><br> <br> <button class="finalise" v-on:click="finaliseTime(1)">FINALISE THIS TIME</button></span></th>
+                          <th>{{pollStartTime2}} - {{pollEndTime2}} <span v-if="hostAccess"><br> <br> <button class="finalise" v-on:click="finaliseTime(2)">FINALISE THIS TIME</button></span></th>
+                          <th>{{pollStartTime3}} - {{pollEndTime3}} <span v-if="hostAccess"><br> <br> <button class="finalise" v-on:click="finaliseTime(3)">FINALISE THIS TIME</button></span></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td><ul class="tablecolumn"> <!--Time 1 voter-->
+                                <li v-for="guest in pollvoters1">{{guest.invitees_username}} ({{guest.invitees_first_name}} {{guest.invitees_last_name}})</li>
+                            </ul></td>
+                            <td><ul class="tablecolumn"> <!--Time 2 voter-->
+                                <li v-for="guest in pollvoters2">{{guest.invitees_username}} ({{guest.invitees_first_name}} {{guest.invitees_last_name}})</li>
+                            </ul></td>
+                            <td><ul class="tablecolumn">  <!--Time 3 voter-->
+                                <li v-for="guest in pollvoters3">{{guest.invitees_username}} ({{guest.invitees_first_name}} {{guest.invitees_last_name}})</li>
+                            </ul></td>
+                        </tr>
+                      </table>
+                    <button v-on:click="popup = !popup;">Close</button>
+                </div>
+            </div>
+
+            <div class="popup-wrapper" v-if="guestUser">
+                <span class="popup-span"></span>
+                <div class="popup-content">
+                    <h3>It looks like you aren't logged in!</h3>
+                    <p>You can <a href="LoginRegister.html">login or register here!</a></p>
+                    <hr>
+                    <p>Alternatively, you can respond to this event as a guest by filling out your details below!
+                        If you have already responded as a guest, re-entering your details will allow you to change your responses!
+                    </p>
+                    <input type="text" name="first-name" class="guest-input" maxlength="255" placeholder="Enter your first name" v-model="guestFirstName">
+                    <br>
+                    <br>
+                    <input type="text" name="last-name" class="guest-input" maxlength="255" placeholder="Enter your last name" v-model="guestLastName">
+                    <br>
+                    <br>
+                    <input type="text" name="email" class="guest-input" maxlength="255" placeholder="Enter your email" v-model="guestEmail">
+                    <br>
+                    <br>
+                    <button v-on:click="checkIfNewGuest()">Submit</button>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+            <div class="popup-wrapper" v-if="pendingUser">
+                <span class="popup-span"></span>
+                <div class="popup-content">
+                    <h3>Sync with Google Calendar?</h3>
+                    <p>Do you want to sync your google calendar to allow us to auto respond to this event based on your avaliability?</p>
+                    <p>If the event is still pending, We will check if you are avaliable for any of the three proposed times and vote on your behalf for the times you are avaliable</p>
+                    <p>You can undo these votes later if your avaliability changes</p>
+                    <p>If the event is confirmed we will check your avaliability against the final time that was chosen</p>
+                    <button class="calendarButton" onclick="handleAuthClick(2)">Yes</button>
+                    <button class="calendarButton" v-on:click="pendingUser=false">No</button>
+                </div>
+            </div>
+
+        </main>
+
+
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>

@@ -1,0 +1,8 @@
+        <div id="header">
+            <!-- Quokka image and Logo -->
+            <a href="/index.html"><img id="Quokka" src="Images/Quokka.png" alt="Quokka in a party hat"></a>
+            <h1><a href="/index.html" id="header-title">Friday Quokka</a></h1>
+            <p class ="right">
+            <button onclick="location.href='LoginRegister.html';" class = "header-button"> LOGIN </button>
+            </p>
+        </div>

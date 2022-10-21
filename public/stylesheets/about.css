@@ -1,0 +1,50 @@
+/*Start about style*/
+#all-about{
+    margin: 1rem;
+    padding: 2rem 2rem;
+    text-align: center;
+    } /* centers content */
+#all-about div{
+    border-radius: 1em;
+    max-height: 600px;
+    border-radius: 1em;
+    vertical-align: top;
+    display: inline-block;
+    border: 10px solid #DDEFEF;
+    overflow: auto;
+} /*styles both middle divs*/
+#about-nav{
+    padding: 0;
+    background-color: #F8E4F0;
+    vertical-align: top;
+    width: 10em;
+    max-height: 10em;
+} /*styles the nav*/
+#about-nav ul{
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+} /*styles the inside of the nav */
+#about-div{
+    padding: 1rem 1rem;
+    width: 50em;
+    background-color: white;
+} /* styles the div with the content */
+
+.about-button{
+    width: 100%;
+    display: block;
+    background-color: #F8E4F0;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    border-radius: 1em;
+} /* styles the buttons in the nav */
+.active, .about-button:hover {
+    background-color: #FDD5E0;
+} /* changes the button color on hover */
+/*End about style*/

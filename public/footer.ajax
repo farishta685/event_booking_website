@@ -1,0 +1,26 @@
+
+<hr id="footline">
+<div id="footer-parent">
+    <p id="copyright"> © 2022 Friday Quokka</p>
+
+    <form method="GET" action="help.html">
+    <input type="submit" class = "footer-button" value= "FAQ">
+    </form>
+
+    <form method="GET" action="about.html">
+    <input type="submit" class = "footer-button" name = "button" value="About" onclick="set_about_button('About')">
+    </form>
+
+    <form method="GET" action="about.html">
+    <input type="submit" class = "footer-button" name = "button" value= "Contact" onclick="set_about_button('Contact')">
+    </form>
+
+    <form method="GET" action="about.html">
+    <input type="submit" class = "footer-button" name = "button" value="Privacy" onclick="set_about_button('Privacy')">
+    </form>
+
+    <form method="GET" action="https://www.flaticon.com/free-icons/invitation">
+    <input type="submit" class = "footer-button" value="Icons created by Freepik">
+    </form>
+
+</div>

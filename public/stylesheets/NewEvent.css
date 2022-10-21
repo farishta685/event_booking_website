@@ -1,0 +1,207 @@
+/*Start NewEvent style*/
+#timeline {
+    border: 2px solid #C4E4E3;
+    border-radius: 10px;
+    text-align: center;
+    width: 75%;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    vertical-align:middle;
+    box-sizing: border-box;
+}
+
+#timeline div{
+    background-color: #FDD5E0;
+    border-radius: 10px;
+
+}
+
+#info, #invite, #time, #confirm {
+    line-height: 50px;
+    background-color:  #DDEFEF;
+    border: 10px solid #DDEFEF;
+    border-radius: 10px;
+    height:700px;
+    width:75%;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    vertical-align:middle;
+    box-sizing: border-box;
+
+}
+
+#time{
+    line-height: normal;
+}
+
+#time select{
+    line-height: normal;
+}
+
+#time input{
+    width: 40%;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#info{
+    line-height: normal;
+}
+
+.event-details input, .event-details textarea {
+    border-radius: 8em;
+    text-align: center;
+    height: 40px;
+    width: 60% ;
+    margin: 20px;
+    margin-bottom: 0;
+}
+
+.event-details textarea {
+    height: 30%;
+    border-radius: 1em;
+    resize: none;
+}
+
+.inputError{
+    margin: 0;
+    color: red;
+
+}
+
+#searchDropdown{
+    border: solid 2px black;
+    width: 60%;
+    vertical-align: middle;
+    margin: auto;
+    height: 200px;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+  /* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #F8E4F0;
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FDD5E0;
+}
+
+#searchDropdown p{
+    border: solid 2px black;
+    margin: 0;
+}
+
+#searchDropdown p:hover{
+    background-color: #C4E4E3;
+    cursor: pointer;
+}
+
+#invite-wrapper, #guestlist, #infoConfirm-wrapper, #guestConfirm{
+    float:left;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    width:30%;
+}
+
+#infoConfirm-wrapper{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 70%;
+    max-height: 400px;
+    overflow: auto;
+}
+
+#infoConfirm pre{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+}
+
+#infoConfirm{
+    text-align: left;
+}
+
+#guestlist, #guestConfirm{
+    max-height:400px;
+    border: solid 2px black;
+    overflow-y: auto;
+
+}
+
+.guesttable{
+    width: 100%;
+    height:100%;
+    border-collapse: collapse;
+}
+
+.guesttable th{
+    width: 100%;
+}
+
+.guesttable tbody tr{
+    border: solid 2px black;
+
+}
+
+#invite-wrapper, #infoConfirm-wrapper{
+    width:70%;
+}
+
+.remove-guest{
+    width: 30px; /* pixel values so the delete button doesn't become really tiny when you shrink the page */
+    height: 30px;
+    float: right;
+}
+
+.event-details .next, #confirm-event{
+    height: 40px;
+    width: 15%;
+    border-radius: 10em;
+    background-color:  #FDD5E0;
+    border-color: #ffa3d1;
+    position: absolute;
+    bottom: 3em;
+    right: 3em;
+}
+
+.event-details .back{
+    height: 40px;
+    width: 15%;
+    border-radius: 10em;
+    background-color:  #FDD5E0;
+    border-color: #ffa3d1;
+    position: absolute;
+    bottom: 3em;
+    left: 3em;
+}
+
+.event-details #confirm-event {
+    height: 40px;
+    width: 15%;
+    border-radius: 10em;
+    background-color:  #FDD5E0;
+    border-color: #ffa3d1;
+}
+/*End NewEvent style*/
